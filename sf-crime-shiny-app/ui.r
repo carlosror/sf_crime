@@ -41,7 +41,7 @@ shinyUI(fluidPage(
            checkboxGroupInput("days_of_week", label = h4("Days of Week"), choices = days_vector, selected = days_checked, inline = TRUE),
            checkboxGroupInput("time_periods", label = h4("Time Periods"), choices = periods_vector, selected = periods_checked, inline = TRUE),
            selectInput("plots_facets", label = h4("Facet density maps and bar plots by"), plots_facets_vector),
-           HTML('<a href="https://github.com/carlosror/chicago_crimes" target="_blank"><img src = "github_icon.png" alt = "xyz"></a>
+           HTML('<a href="https://github.com/carlosror/sf_crime" target="_blank"><img src = "github_icon.png" alt = "xyz"></a>
                  <a href="https://twitter.com/LrnDataScience" target="_blank"><img src = "twitter_icon.png" alt = "xyz"></a>')
     ),
     mainPanel(
