@@ -1,0 +1,71 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+I think we only need one munging file. There are no NA's and there don't seem to be any obvious candidates for categories elimination.
+
+Loading libraries we plan on using
+```{r}
+library(chron) # for dealing with chronological objects
+library(magrittr) # pipe operator
+library(plyr) # rename
+library(readr)# read_csv(), ~3x faster than read.csv()
+```
+
+Loading the data
+```{r}
+start <- Sys.time()
+sf_crimes <- read_csv("Map__Crime_Incidents_-_from_1_Jan_2003.csv")
+Sys.time() - start
+```
+
+Removing some columns we won't use and renaming others so they match existing code
+```{r}
+# Renaming
+sf_crimes <- rename(sf_crimes, replace = c("Category" = "categories"))
+sf_crimes <- rename(sf_crimes, replace = c("Descript" = "description"))
+sf_crimes <- rename(sf_crimes, replace = c("DayOfWeek" = "days"))
+sf_crimes <- rename(sf_crimes, replace = c("Date" = "date"))
+sf_crimes <- rename(sf_crimes, replace = c("Address" = "address"))
+sf_crimes <- rename(sf_crimes, replace = c("X" = "longitude"))
+sf_crimes <- rename(sf_crimes, replace = c("Y" = "latitude"))
+
+# Deleting
+sf_crimes$PdDistrict <- NULL
+sf_crimes$Resolution <- NULL
+sf_crimes$Location <- NULL
+```
+
+Dealing with times and dates:
+
+```{r}
+start <- Sys.time()
+
+#The times are kept in a separate column rather than in the Date field itself
+sf_crimes_hours <- sf_crimes$Time %>% times() %>% hours()
+
+#Create a new column consisting of time period incidnts took place
+# Determine periods as follows:
+# Early Morning (before 6 AM): 0, Morning (between 6 AM and 12 PM): 1
+# Afternoon (between noon and 6 PM): 2, Evening (between 6 PM and midnight): 3
+hours_to_periods <- function(hour) {if (hour %/% 6 == 0) "early_morning" else if (hour %/% 6 == 1) "morning" else if (hour %/% 6 == 2) "afternoon" else "evening"}
+sf_crimes$periods <- sapply(sf_crimes_hours, hours_to_periods)
+sf_crimes$Time <- NULL
+Sys.time() - start
+```
+
+Write to file:
+```{r}
+write_csv(sf_crimes, "sf_crimes.csv")
+```
+
+Write the files
+```{r}
+start <- Sys.time()
+for(year in c(2003:2017)) {
+  crimes <- sf_crimes[substr(sf_crimes$date, 7, 10) == as.character(year),]
+  write_csv(as.data.frame(crimes), paste("crimes_", as.character(year), ".csv", sep=""))
+}
+Sys.time() - start
+```
