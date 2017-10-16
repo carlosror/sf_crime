@@ -1,4 +1,4 @@
-###URL
+### URL
 https://carlosgg.shinyapps.io/sf-crime-map/
 
 ### Motivation
@@ -10,7 +10,7 @@ I wanted to be able to enter a Chicago address or landmark and get a plot of cri
 
 [R](https://leanpub.com/rprogramming), [R Studio](https://www.rstudio.com/), [Shiny R server](http://shiny.rstudio.com/articles/), [Leaflet for R](http://rstudio.github.io/leaflet/), [ggmap](https://journal.r-project.org/archive/2013-1/kahle-wickham.pdf).
 
-###Data source
+### Data source
 
 The crime data was obtained from [SF Open Data](https://data.sfgov.org/Public-Safety/Map-Crime-Incidents-from-1-Jan-2003/gxxq-x39z/data)
 
