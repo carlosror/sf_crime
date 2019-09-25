@@ -11,6 +11,8 @@ library(ggmap) #density map
 library(leaflet) #clickable map
 library(plyr) #possibly use later for count() function to generate frequency tables in Summary
 library(readr) #read_csv(), 3x faster than read.csv()
+# register_google(key = "AIzaSyB9FHRfA0LvXs7k1WilJgAq2kyqbR1tOrM")
+register_google(key = "AIzaSyDV235gPhQgTX0_uHbxgCB5JqbdQkoj_L8")
 
 shinyServer(function(input, output, session) {
     

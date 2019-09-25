@@ -1,7 +1,9 @@
 name: sf-crime-map
+title:
 account: carlosgg
 server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
 appId: 158324
-bundleId: 719210
+bundleId: 2418498
 url: https://carlosgg.shinyapps.io/sf-crime-map/
-when: 1487694395.92426
+when: 1568672354.4917
